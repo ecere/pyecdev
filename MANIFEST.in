@@ -1,0 +1,8 @@
+global-exclude *
+recursive-include eC *
+recursive-exclude eC obj/**
+recursive-exclude eC *.o**
+recursive-exclude eC *.so**
+recursive-exclude eC .git**
+include setup.py
+include README.md

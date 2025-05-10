@@ -1,0 +1,3 @@
+[submodule "eC"]
+	path = eC
+	url = https://github.com/ecere/eC
