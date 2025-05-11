@@ -46,7 +46,7 @@ def prepare_package_dir(src_files, dest_dir):
 
 def build_package():
    try:
-      subprocess.check_call([make_cmd, f'-j{cpu_count}', 'SKIP_SONAME=y'], cwd=eC_dir)
+      subprocess.check_call([make_cmd, f'-j{cpu_count}', 'SKIP_SONAME=y', 'ENABLE_PYTHON_RPATHS=y'], cwd=eC_dir)
       prepare_package_dir([
          (os.path.join(lib_dir, dll_prefix + 'ecrt' + dll_ext), os.path.join(dll_dir, dll_prefix + 'ecrt' + dll_ext)),
          (os.path.join(lib_dir, dll_prefix + 'ectp' + dll_ext), os.path.join(dll_dir, dll_prefix + 'ectp' + dll_ext)),
