@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version       = '0.0.1'
+pkg_version = '0.0.2'
 
 env = os.environ.copy()
 
@@ -241,7 +241,7 @@ else:
 
 setup(
     name='ecdev',
-    version='0.0.1',
+    version=pkg_version,
     setup_requires=['setuptools'],
     packages=packages,
     package_dir=package_dir,
