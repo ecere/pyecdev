@@ -57,7 +57,7 @@ The eC runtime library implements:
 - various types of containers (dynamic arrays, hash tables, linked lists, AVL Trees, multiple forms of associative arrays),
 - files I/O including temporary files, bidirectional processing input/output pipes, creating/decompressing/accessing files from archives (including resources packed directly within the executables), file/directory monitoring, cross-platform file handling functions,
 - multithreading support including threads, mutexes, semaphores and conditions,
-- internationalization (extensive unicode support with the Unicode data resources embedded within the library), internationalization of text strings compatible with GNU gettext, i18n of libecrt itself currently including Chinese, Brazilian Portuguese, Spanish, as partial Russian translation, as well as the start of other languages,
+- internationalization (extensive unicode support with the Unicode data resources embedded within the library), internationalization of text strings compatible with GNU gettext, i18n of libecrt itself currently including Chinese, Brazilian Portuguese, Spanish, partial Russian translation, as well as the start of other languages,
 - date and time handling,
 - a JSON parser and writer (with support for automatic JSON (de)serialization of any eC types), as well as utilities to manage application settings stored in JSON files.
 

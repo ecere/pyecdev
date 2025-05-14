@@ -249,6 +249,25 @@ setup(
     include_package_data=True,
     ext_modules=[],
     cmdclass=cmdclass,
+    description='eC Software Development Kit',
+    url='https://ec-lang.org',
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
+    author='Jérôme Jacovella-St-Louis, Ecere Corporation',
+    author_email='jerome@ecere.com',
+    license='BSD-3-Clause',
+    keywords='eC sdk compiler transpiler archiver runtime type-system object-model reflection file-system collections datetime json-parser econ serialization',
+    classifiers=[
+       'Development Status :: 4 - Beta',
+       'Intended Audience :: Developers',
+       'Operating System :: Microsoft :: Windows',
+       'Operating System :: POSIX :: Linux',
+       'Programming Language :: Other',
+       'Programming Language :: Python :: 3',
+       'Topic :: File Formats :: JSON',
+       'Topic :: Software Development :: Compilers',
+       'Topic :: Software Development :: Internationalization',
+       'Topic :: Software Development :: Libraries',
+       'Topic :: System :: Archiving',
+    ]
 )
