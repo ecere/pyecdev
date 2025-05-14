@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version = '0.0.2'
+pkg_version = '0.0.1rc1'
 
 env = os.environ.copy()
 
@@ -101,6 +101,7 @@ with open(os.path.join(rwd, 'README.md'), encoding='u8') as f:
 
 cpu_count = multiprocessing.cpu_count()
 eC_dir = os.path.join(os.path.dirname(__file__), 'eC')
+eC_c_dir = os.path.join(os.path.dirname(__file__), 'eC', 'bindings', 'c')
 eC_py_dir = os.path.join(os.path.dirname(__file__), 'eC', 'bindings', 'py')
 platform_str = 'win32' if sys.platform.startswith('win') else ('apple' if sys.platform.startswith('darwin') else 'linux')
 dll_prefix = '' if platform_str == 'win32' else 'lib'
@@ -138,6 +139,7 @@ def build_package():
             (os.path.join(bin_dir, 'ecs' + exe_ext), os.path.join('bin', 'ecs' + exe_ext)),
             (os.path.join(bin_dir, 'ear' + exe_ext), os.path.join('bin', 'ear' + exe_ext)),
             (os.path.join(eC_py_dir, 'cffi-ecrt.h'), os.path.join('include', 'cffi-ecrt.h')),
+            (os.path.join(eC_c_dir, 'ecrt.h'),       os.path.join('include', 'ecrt.h')),
             (os.path.join(eC_dir, 'crossplatform.mk'), 'crossplatform.mk'),
             (os.path.join(eC_dir, 'default.cf'), 'default.cf'),
          ], artifacts_dir)
@@ -192,7 +194,8 @@ lib_files = [
 ]
 
 include_files = [
-   'cffi-ecrt.h'
+   'cffi-ecrt.h',
+   'ecrt.h'
 ]
 
 bin_files = [

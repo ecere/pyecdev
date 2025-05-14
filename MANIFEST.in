@@ -4,5 +4,7 @@ recursive-exclude eC obj/**
 recursive-exclude eC *.o**
 recursive-exclude eC *.so**
 recursive-exclude eC .git**
+recursive-exclude eC */__pycache__
+recursive-exclude eC bindings/py/_pyecrt.c
 include setup.py
 include README.md
