@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version = '0.0.2'
+pkg_version = '0.0.3'
 
 env = os.environ.copy()
 
