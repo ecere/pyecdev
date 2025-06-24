@@ -11,10 +11,17 @@ jobs:
         # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
         # os: [ubuntu-latest]
         # os: [windows-2019] #latest]
-        os: [ubuntu-latest, windows-2019, ubuntu-24.04-arm]
+        # os: [macos-latest]
+        os: [ubuntu-latest, windows-2019, ubuntu-24.04-arm, macos-13, macos-latest]
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install bootstrap Python (macOS only)
+        if: runner.os == 'macOS'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
 
       # Apply patch only on Windows
       - name: Apply header patch on Windows
@@ -48,6 +55,22 @@ jobs:
             # since commands are executed in a UNIX-like shell expecting 'mkdir -p'
             CIBW_ENVIRONMENT: "MSYSCON=y"
             CIBW_BUILD_VERBOSITY: 1
+            # CIBW_REPAIR_WHEEL_COMMAND_MACOS: 'delocate-wheel -w {dest_dir} -v {wheel}'
+            CIBW_REPAIR_WHEEL_COMMAND_MACOS: >
+              sh -c '
+                set -e
+
+                TMP_DIR=$(mktemp -d);
+                unzip -q {wheel} -d "$TMP_DIR";
+
+                otool -L "$TMP_DIR"/ecdev/lib/libecrt.dylib;
+                otool -L "$TMP_DIR"/ecdev/lib/libectp.dylib;
+                otool -L "$TMP_DIR"/ecdev/bin/ecc;
+
+                rm -r "$TMP_DIR"
+
+                cp {wheel} {dest_dir}
+              '
 
         #   CIBW_SOME_OPTION: value
         #   CIBW_BEFORE_BUILD: |
