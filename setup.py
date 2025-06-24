@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version = '0.0.3'
+pkg_version = '0.0.4'
 
 env = os.environ.copy()
 
@@ -265,6 +265,7 @@ setup(
        'Intended Audience :: Developers',
        'Operating System :: Microsoft :: Windows',
        'Operating System :: POSIX :: Linux',
+       'Operating System :: MacOS',
        'Programming Language :: Other',
        'Programming Language :: Python :: 3',
        'Topic :: File Formats :: JSON',
