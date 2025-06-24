@@ -12,7 +12,7 @@ jobs:
         # os: [ubuntu-latest]
         # os: [windows-2019] #latest]
         # os: [macos-latest]
-        os: [ubuntu-latest, windows-2019, ubuntu-24.04-arm, macos-13, macos-latest]
+        os: [ubuntu-latest, windows-2022, ubuntu-24.04-arm, macos-13, macos-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
 
       # Apply patch only on Windows
       - name: Apply header patch on Windows
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         run: |
           # Patch MinGW-w64 header files currently causing troubles for eC compiler (C99 .namedmembers assignments in AVX files, and re-defnitions of function type typedef in winbase.h)
           #git apply --directory=mingw64 '${{ github.workspace }}\patches\mingw64-gcc-12.2.0-patches.patch'

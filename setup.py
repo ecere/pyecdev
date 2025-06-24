@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version = '0.0.3'
+pkg_version = '0.0.4'
 
 env = os.environ.copy()
 
@@ -142,6 +142,7 @@ def build_package():
             (os.path.join(eC_c_dir, 'ecrt.h'),       os.path.join('include', 'ecrt.h')),
             (os.path.join(eC_dir, 'crossplatform.mk'), 'crossplatform.mk'),
             (os.path.join(eC_dir, 'default.cf'), 'default.cf'),
+            (os.path.join(eC_dir, 'extras', 'testing', 'testingFramework.ec'), os.path.join('extras', 'testing', 'testingFramework.ec')),
          ], artifacts_dir)
    except subprocess.CalledProcessError as e:
       print(f"Error during make: {e}")
@@ -218,6 +219,10 @@ else:
       os.path.join('libectp' + dll_ext),
    ])
 
+extras_files = [
+   'testing/testingFramework.ec'
+]
+
 commands = set(sys.argv)
 if 'sdist' in commands:
    packages=['ecdev']
@@ -225,18 +230,20 @@ if 'sdist' in commands:
    package_data = {'ecdev': [] }
    cmdclass = {}
 else:
-   packages=['ecdev', 'ecdev.lib', 'ecdev.bin', 'ecdev.include' ]
+   packages=['ecdev', 'ecdev.lib', 'ecdev.bin', 'ecdev.include', 'ecdev.extras']
    package_dir={
       'ecdev': artifacts_dir,
       'ecdev.lib': os.path.join(artifacts_dir, 'lib'),
       'ecdev.bin': os.path.join(artifacts_dir, 'bin'),
-      'ecdev.include': os.path.join(artifacts_dir, 'include')
+      'ecdev.include': os.path.join(artifacts_dir, 'include'),
+      'ecdev.extras': os.path.join(artifacts_dir, 'extras')
    }
    package_data={
       'ecdev': [ 'crossplatform.mk', 'default.cf' ],
       'ecdev.lib': lib_files,
       'ecdev.bin': bin_files,
       'ecdev.include': include_files,
+      'ecdev.extras': extras_files,
    }
    cmdclass={'build': build_with_make, 'bdist_wheel': setplatname_bdist_wheel, 'egg_info': egg_info_with_build }
    if sys.platform.startswith('win'):
@@ -265,6 +272,7 @@ setup(
        'Intended Audience :: Developers',
        'Operating System :: Microsoft :: Windows',
        'Operating System :: POSIX :: Linux',
+       'Operating System :: MacOS',
        'Programming Language :: Other',
        'Programming Language :: Python :: 3',
        'Topic :: File Formats :: JSON',
