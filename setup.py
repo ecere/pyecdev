@@ -14,7 +14,7 @@ from wheel.bdist_wheel import bdist_wheel
 
 from os import path
 
-pkg_version = '0.0.5'
+pkg_version = '0.0.5post1'
 
 env = os.environ.copy()
 
@@ -143,6 +143,17 @@ def build_package():
             (os.path.join(eC_dir, 'crossplatform.mk'), 'crossplatform.mk'),
             (os.path.join(eC_dir, 'default.cf'), 'default.cf'),
             (os.path.join(eC_dir, 'extras', 'testing', 'testingFramework.ec'), os.path.join('extras', 'testing', 'testingFramework.ec')),
+            (os.path.join(eC_dir, 'extras', 'base64.ec'), os.path.join('extras', 'base64.ec')),
+            (os.path.join(eC_dir, 'extras', 'BinaryTriangle.ec'), os.path.join('extras', 'BinaryTriangle.ec')),
+            (os.path.join(eC_dir, 'extras', 'FileSystemAPI.ec'), os.path.join('extras', 'FileSystemAPI.ec')),
+            (os.path.join(eC_dir, 'extras', 'iso8601.ec'), os.path.join('extras', 'iso8601.ec')),
+            (os.path.join(eC_dir, 'extras', 'JSONSchema.ec'), os.path.join('extras', 'JSONSchema.ec')),
+            (os.path.join(eC_dir, 'extras', 'md5.ec'), os.path.join('extras', 'md5.ec')),
+            (os.path.join(eC_dir, 'extras', 'protocolBuffer.ec'), os.path.join('extras', 'protocolBuffer.ec')),
+            (os.path.join(eC_dir, 'extras', 'stringTools.ec'), os.path.join('extras', 'stringTools.ec')),
+            (os.path.join(eC_dir, 'extras', 'stringUtils.ec'), os.path.join('extras', 'stringUtils.ec')),
+            (os.path.join(eC_dir, 'extras', 'threadedProcessing.ec'), os.path.join('extras', 'threadedProcessing.ec')),
+            (os.path.join(eC_dir, 'extras', 'XMLParser.ec'), os.path.join('extras', 'XMLParser.ec'))
          ], artifacts_dir)
    except subprocess.CalledProcessError as e:
       print(f"Error during make: {e}")
@@ -220,7 +231,18 @@ else:
    ])
 
 extras_files = [
-   'testing/testingFramework.ec'
+   'testing/testingFramework.ec',
+   'base64.ec',
+   'BinaryTriangle.ec',
+   'FileSystemAPI.ec',
+   'iso8601.ec',
+   'JSONSchema.ec',
+   'md5.ec',
+   'protocolBuffer.ec',
+   'stringTools.ec',
+   'stringUtils.ec',
+   'threadedProcessing.ec',
+   'XMLParser.ec'
 ]
 
 commands = set(sys.argv)
