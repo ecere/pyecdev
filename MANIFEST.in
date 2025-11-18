@@ -7,4 +7,5 @@ recursive-exclude eC .git**
 recursive-exclude eC */__pycache__
 recursive-exclude eC bindings/py/_pyecrt.c
 include setup.py
+include pyproject.toml
 include README.md
