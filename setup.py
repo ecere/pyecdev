@@ -22,7 +22,7 @@ if sys.platform.startswith("win") and sys.version_info[:2] == (3, 6):
    import distutils.cygwinccompiler
    distutils.cygwinccompiler.get_msvcr = lambda: [] # ["msvcr140"] -- we're building with MinGW-w64
 
-pkg_version = '0.0.6'
+pkg_version = '0.0.7rc1'
 
 env = os.environ.copy()
 
@@ -133,7 +133,13 @@ def prepare_package_dir(src_files, dest_dir):
 def build_package():
    try:
       if not os.path.exists(artifacts_dir):
-         make_and_args = [make_cmd, f'-j{cpu_count}', 'SKIP_SONAME=y', 'ENABLE_PYTHON_RPATHS=y'] #, 'V=1']
+         archflags = env.get("ARCHFLAGS", None)
+         make_and_args = [make_cmd, f'-j{cpu_count}', 'SKIP_SONAME=y', 'ENABLE_PYTHON_RPATHS=y', 'V=1']
+         if archflags is not None:
+            # This will add arm64 architecture flags for macos-latest
+            make_and_args.append('CFLAGS=' + archflags)
+            make_and_args.append('LDFLAGS=' + archflags)
+
          if cc_override is not None:
             make_and_args.extend(cc_override)
 
@@ -193,8 +199,12 @@ class setplatname_bdist_wheel(bdist_wheel):
          arch = 'arm64' if 'arm' in machine else 'x86_64'
          self.plat_name = f'macosx_10_15_{arch}'
       elif system.startswith('linux'):
-         arch = 'x86_64' if 'x86_64' in machine or 'amd64' in machine else machine
-         self.plat_name = f'manylinux1_{arch}'
+         env_plat = os.environ.get('AUDITWHEEL_PLAT')
+         if env_plat:
+            self.plat_name = env_plat
+         else:
+            arch = 'x86_64' if 'x86_64' in machine or 'amd64' in machine else machine
+            self.plat_name = f'manylinux2014_{arch}'  # f'manylinux1_{arch}'
       elif system.startswith('freebsd'):
          arch = 'x86_64' if 'x86_64' in machine or 'amd64' in machine else machine
          self.plat_name = f'freebsd_{arch}'

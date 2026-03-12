@@ -7,6 +7,7 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         # os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
         # os: [ubuntu-latest]
@@ -43,15 +44,15 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Install cibuildwheel
-        run: python3 -m pip install cibuildwheel==2.23.3
+        run: python3 -m pip install cibuildwheel #==2.23.3
 
       - name: Build wheels
         run: python3 -m cibuildwheel --output-dir wheelhouse
         env:
-            CIBW_ENABLE: "pypy"
+            CIBW_ENABLE: "pypy pypy-eol"
             # Windows PyPy 3.8 build is currently failing due to https://github.com/python-cffi/cffi/issues/170
             # 32-bit builds on Windows are not supported because the MinGW-w64 does not have multilib enabled
-            CIBW_SKIP: "*-win32 pp*-win*"
+            CIBW_SKIP: "*-win32 pp*-win* cp*t-*"
             # This ensures WIN_SHELL_COMMANDS does not get defined on Windows in crossplatform.mk, which breaks deep directory creations
             # since commands are executed in a UNIX-like shell expecting 'mkdir -p'
             CIBW_ENVIRONMENT: "MSYSCON=y"
